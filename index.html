@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#d4a574">
+    <title>Vegcat.icu - 个人主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* disable selection on all elements by default for consistency */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background */
+        .bg-img {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            pointer-events: none;
+            /* ensure background is visible */
+            display: block;
+        }
+
+        .bg-desktop {
+            display: block;
+        }
+
+        .bg-mobile {
+            display: none;
+        }
+
+        /* Overlay for background dimming */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Mobile background */
+        @media (max-width: 768px) {
+            .bg-desktop {
+                display: none;
+            }
+            .bg-mobile {
+                display: block;
+            }
+        }
+
+        /* Added canvas style for mouse trail */
+        #trail-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* Main content */
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem 1rem 6rem; /* Add bottom padding to prevent footer overlap on mobile */
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Avatar */
+        .avatar-container {
+            /* Increased avatar size */
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        @media (min-width: 768px) {
+            .avatar-container {
+                width: 260px;
+                height: 260px;
+            }
+        }
+
+        .avatar-container:active {
+            transform: scale(0.95);
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(212, 165, 116, 0.3);
+            overflow: hidden;
+            transition: transform 2s ease-in-out;
+        }
+
+        .avatar.rotating {
+            transform: rotate(360deg);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            /* Specifically explicitly disable selection for title */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+
+        /* Description */
+        .description {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            background: linear-gradient(45deg, #d4a574, #e8c5a0);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            min-width: 160px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #e8c5a0, #f4d4a7);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+        }
+
+        .btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .btn .arrow {
+            opacity: 0.7;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 20;
+            pointer-events: none; /* Allow clicks to pass through outside the content */
+        }
+
+        .footer-content {
+            pointer-events: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.6s;
+            transition: all 0.3s ease;
+        }
+
+        .footer-content:hover {
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-link {
+            color: #e8c5a0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .footer-link:hover {
+            background: #e8c5a0;
+            color: #333;
+            transform: translateY(-1px);
+        }
+
+        .footer-link::before {
+            content: '↺';
+            font-size: 1.1em;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 1rem;
+            background: linear-gradient(to right, #d4a574, #e8c5a0);
+        }
+
+        .modal-body {
+            background: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .modal-body h3 {
+            color: #333;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .modal-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: #f3f4f6;
+            margin-bottom: 1rem;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.primary {
+            background: #d4a574;
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            background: #c59663;
+        }
+
+        .modal-btn.secondary {
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+
+        .modal-btn.secondary:hover {
+            background: #f9fafb;
+        }
+
+        /* Loading */
+        .loading {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #d4a574, #e8c5a0);
+            animation: fadeOut 0.5s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; pointer-events: none; }
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 215, 0, 0.3); // Gold color
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- New background implementation -->
+    <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAECh8ho0o-qNZfpecYx-loV1Ij3gF6BmgACYRkAApqnmFZH3mnkoy1eyzYE.jpg" class="bg-img bg-desktop" alt="">
+    <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAECk5Zo04QTZ9hPOe6O_PPEB_D2b1CmwwACfhsAAtta8VaYJRAVNMOv-jYE.jpg" class="bg-img bg-mobile" alt="">
+    <div class="bg-overlay"></div>
+    
+    <!-- Added canvas for mouse trail -->
+    <canvas id="trail-canvas"></canvas>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Avatar -->
+        <div class="avatar-container" onclick="rotateAvatar()">
+            <div class="avatar" id="avatar">
+                <img src="https://q.qlogo.cn/headimg_dl?dst_uin=1145145797&spec=640&img_type=jpg" alt="Avatar">
+            </div>
+        </div>
+
+        <!-- Title -->
+        <h1>Vegcat.icu</h1>
+
+        <!-- Description -->
+        <p class="description">那一天的忧郁 忧郁起来</p>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <a href="https://m.bilibili.com/space/497350955" target="_blank" class="btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.249-1.56-3.76v-7.36c.036-1.51.556-2.769 1.56-3.773s2.262-1.524 3.773-1.56h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .356-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.789 1.894v7.52c.02.765.283 1.395.789 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.128.789-1.893v-7.52c-.02-.765-.283-1.396-.789-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.56-.373-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.56-.373-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
+                </svg>
+                <span>Bilibili</span>
+                <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </a>
+            
+            <a href="https://steamcommunity.com/id/TwoOctober" target="_blank" class="btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>Steam</span>
+                <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </a>
+            
+            <button class="btn" onclick="showModal()">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>联系我</span>
+                <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-content">
+            <a href="https://cat.vegcat.icu" class="footer-link">旧版网页</a>
+            <div class="footer-divider"></div>
+            <p class="footer-text">© 2025 Powered by Vegcat</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal" onclick="hideModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header"></div>
+            <div class="modal-body">
+                <h3>联系方式</h3>
+                <div class="modal-image">
+                    <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAECk7do09oCTJLgnsKMQfhKnlXjNutRcAACHiAAAttgoVbC13g_hSTY1zYE.jpg" alt="Contact QR">
+                </div>
+                <div class="modal-buttons">
+                    <a href="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAECk7do09oCTJLgnsKMQfhKnlXjNutRcAACHiAAAttgoVbC13g_hSTY1zYE.jpg" download="contact.jpg" class="modal-btn primary">保存图片</a>
+                    <button class="modal-btn secondary" onclick="hideModal()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Avatar rotation
+        function rotateAvatar() {
+            const avatar = document.getElementById('avatar');
+            avatar.classList.add('rotating');
+            setTimeout(() => {
+                avatar.classList.remove('rotating');
+            }, 2000);
+        }
+
+        // Modal functions
+        function showModal() {
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function hideModal(event) {
+            if (!event || event.target.id === 'modal') {
+                document.getElementById('modal').classList.remove('active');
+            }
+        }
+
+        const canvas = document.getElementById('trail-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            createParticle();
+        });
+
+        // Also track touch for mobile
+        window.addEventListener('touchmove', (e) => {
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+            createParticle();
+            createParticle(); 
+        });
+
+        function createParticle() {
+            if (particles.length > 100) return;
+            
+            particles.push({
+                x: mouseX,
+                y: mouseY,
+                size: Math.random() * 15 + 5, 
+                speedX: Math.random() * 2 - 1,
+                speedY: Math.random() * 2 - 1,
+                hue: 45 + Math.random() * 10, 
+                life: 1
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.globalCompositeOperation = 'lighter';
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+                gradient.addColorStop(0, `hsla(${p.hue}, 100%, 70%, ${p.life})`);
+                gradient.addColorStop(1, `hsla(${p.hue}, 100%, 50%, 0)`);
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.life -= 0.015; 
+
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            
+            ctx.globalCompositeOperation = 'source-over';
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+    </script>
+</body>
+</html>
