@@ -1,120 +1,650 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="preload" href="_next/static/media/e4af272ccee01ff0-s.p.woff2" as="font" crossorigin="" type="font/woff2">
-  <link rel="preload" as="image" href="headimg_dl/index.html" fetchpriority="high">
-  <link rel="stylesheet" href="_next/static/css/d3fd5e4f13183595.css" data-precedence="next">
-  <link rel="preload" as="script" fetchpriority="low" href="_next/static/chunks/webpack-d91a3252d28944ec.js">
-  <script src="_next/static/chunks/39b39b47-aec2088ebdc3bd27.js" async=""></script>
-  <script src="_next/static/chunks/923-3883e65a279f7fbe.js" async=""></script>
-  <script src="_next/static/chunks/main-app-f609a3655b03bd37.js" async=""></script>
-  <script src="_next/static/chunks/852-ed920c6f2983a994.js" async=""></script>
-  <script src="_next/static/chunks/app/page-22894ddea8c81f78.js" async=""></script>
-  <title>Necoarc.cn</title>
-  <meta name="description" content="Necoarc.cn">
-  <meta name="generator" content="v0.app">
-  <link rel="shortcut icon" href="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMGE5ZmYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE3LjgxMyA0LjY1M2guODU0YzEuNTEuMDU0IDIuNzY5LjU3OCAzLjc3MyAxLjU3NCAxLjAwNC45OTUgMS41MjQgMi4yNDkgMS41NiAzLjc2djcuMzZjLS4wMzYgMS41MS0uNTU2IDIuNzY5LTEuNTYgMy43NzNzLTIuMjYyIDEuNTI0LTMuNzczIDEuNTZINS4zMzNjLTEuNTEtLjAzNi0yLjc2OS0uNTU2LTMuNzczLTEuNTZTLjAzNiAxOC44NTggMCAxNy4zNDd2LTcuMzZjLjAzNi0xLjUxMS41NTYtMi43NjUgMS41Ni0zLjc2IDEuMDA0LS45OTYgMi4yNjItMS41MiAzLjc3My0xLjU3NGguNzc0bC0xLjE3NC0xLjEyYTEuMjM0IDEuMjM0IDAgMCAxLS4zNzMtLjkwNmMwLS4zNTYuMTI0LS42NTguMzczLS45MDdsLjAyNy0uMDI3Yy4yNjctLjI0OS41NzMtLjM3My45Mi0uMzczLjM0NyAwIC42NTMuMTI0LjkyLjM3M0w5LjY1MyA0LjQ0Yy4wNzEuMDcxLjEzNC4xNDIuMTg3LjIxM2g0LjI2N2EuODM2LjgzNiAwIDAgMSAuMTYtLjIxM2wyLjg1My0yLjc0N2MuMjY3LS4yNDkuNTczLS4zNzMuOTItLjM3My4zNDcgMCAuNjYyLjE1MS45MjkuNC4yNjcuMjQ5LjM5MS41NTEuMzkxLjkwNyAwIC4zNTYtLjEyNC42NTctLjM3My45MDZ6TTUuMzMzIDcuMjRjLS43NDYuMDE4LTEuMzczLjI3Ni0xLjg4Ljc3My0uNTA2LjQ5OC0uNzY5IDEuMTMtLjc4OSAxLjg5NHY3LjUyYy4wMi43NjUuMjgzIDEuMzk1Ljc4OSAxLjg5My41MDcuNDk4IDEuMTM0Ljc1NiAxLjg4Ljc3M2gxMy4zMzRjLjc0Ni0uMDE3IDEuMzczLS4yNzUgMS44OC0uNzczLjUwNi0uNDk4Ljc2OS0xLjEyOC43ODktMS44OTN2LTcuNTJjLS4wMi0uNzY1LS4yODMtMS4zOTYtLjc4OS0xLjg5NC0uNTA3LS40OTctMS4xMzQtLjc1NS0xLjg4LS43NzN6TTggMTEuMTA3Yy4zNzMgMCAuNjg0LjEyNC45MzMuMzczLjI1LjI0OS4zODMuNTY5LjQuOTZ2MS4xNzNjLS4wMTcuMzkxLS4xNS43MTEtLjQuOTYtLjI0OS4yNS0uNTYuMzc0LS45MzMuMzc0cy0uNjg0LS4xMjUtLjkzMy0uMzc0Yy0uMjUtLjI0OS0uMzgzLS41NjktLjQtLjk2VjEyLjQ0Yy4wMTctLjM5MS4xNS0uNzExLjQtLjk2LjI0OS0uMjQ5LjU2LS4zNzMuOTMzLS4zNzN6bTggMGMuMzczIDAgLjY4NC4xMjQuOTMzLjM3My4yNS4yNDkuMzgzLjU2OS40Ljk2djEuMTczYy0uMDE3LjM5MS0uMTUuNzExLS40Ljk2LS4yNDkuMjUtLjU2LjM3NC0uOTzMy4zNzRzLS42ODQtLjEyNS0uOTMzLS4zNzRjLS4yNS0uMjQ5LS4zODMtLjU2OS0uNC0uOTZWMTIuNDRjLjAxNy0uMzkxLjE1LS43MTEuNC0uOTYuMjQ5LS4yNDkuNTYtLjM3My45MzMtLjM3M3oiLz48L3N2Zz4=">
-  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMGE5ZmYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE3LjgxMyA0LjY1M2guODU0YzEuNTEuMDU0IDIuNzY5LjU3OCAzLjc3MyAxLjU3NCAxLjAwNC45OTUgMS41MjQgMi4yNDkgMS41NiAzLjc2djcuMzZjLS4wMzYgMS41MS0uNTU2IDIuNzY5LTEuNTYgMy43NzNzLTIuMjYyIDEuNTI0LTMuNzczIDEuNTZINS4zMzNjLTEuNTEtLjAzNi0yLjc2OS0uNTU2LTMuNzczLTEuNTZTLjAzNiAxOC44NTggMCAxNy4zNDd2LTcuMzZjLjAzNi0xLjUxMS41NTYtMi43NjUgMS41Ni0zLjc2IDEuMDA0LS45OTYgMi4yNjItMS41MiAzLjc3My0xLjU3NGguNzc0bC0xLjE3NC0xLjEyYTEuMjM0IDEuMjM0IDAgMCAxLS4zNzMtLjkwNmMwLS4zNTYuMTI0LS42NTguMzczLS45MDdsLjAyNy0uMDI3Yy4yNjctLjI0OS41NzMtLjM3My45Mi0uMzczLjM0NyAwIC42NTMuMTI0LjkyLjM3M0w5LjY1MyA0LjQ0Yy4wNzEuMDcxLjEzNC4xNDIuMTg3LjIxM2g0LjI2N2EuODM2LjgzNiAwIDAgMSAuMTYtLjIxM2wyLjg1My0yLjc0N2MuMjY3LS4yNDkuNTczLS4zNzMuOTItLjM3My4zNDcgMCAuNjYyLjE1MS45MjkuNC4yNjcuMjQ5LjM5MS41NTEuMzkxLjkwNyAwIC4zNTYtLjEyNC42NTctLjM3My45MDZ6TTUuMzMzIDcuMjRjLS43NDYuMDE4LTEuMzczLjI3Ni0xLjg4Ljc3My0uNTA2LjQ5OC0uNzY5IDEuMTMtLjc4OSAxLjg5NHY3LjUyYy4wMi43NjUuMjgzIDEuMzk1Ljc4OSAxLjg5My41MDcuNDk4IDEuMTM0Ljc1NiAxLjg4Ljc3M2gxMy4zMzRjLjc0Ni0uMDE3IDEuMzczLS4yNzUgMS44OC0uNzczLjUwNi0uNDk4Ljc2OS0xLjEyOC43ODktMS44OTN2LTcuNTJjLS4wMi0uNzY1LS4yODMtMS4zOTYtLjc4OS0xLjg5NC0uNTA3LS40OTctMS4xMzQtLjc1NS0xLjg4LS43NzN6TTggMTEuMTA3Yy4zNzMgMCAuNjg0LjEyNC45MzMuMzczLjI1LjI0OS4zODMuNTY5LjQuOTZ2MS4xNzNjLS4wMTcuMzkxLS4xNS43MTEtLjQuOTYtLjI0OS4yNS0uNTYuMzc0LS45MzMuMzc0cy0uNjg0LS4xMjUtLjkzMy0uMzc0Yy0uMjUtLjI0OS0uMzgzLS41NjktLjQtLjk2VjEyLjQ0Yy4wMTctLjM5MS4xNS0uNzExLjQtLjk2LjI0OS0uMjQ5LjU2LS4zNzMuOTMzLS4zNzN6bTggMGMuMzczIDAgLjY4NC4xMjQuOTMzLjM3My4yNS4yNDkuMzgzLjU2OS40Ljk2djEuMTczYy0uMDE3LjM5MS0uMTUuNzExLS40Ljk2LS4yNDkuMjUtLjU2LjM3NC0uOTMzLjM3NHMtLjY4NC0uMTI1LS45MzMtLjM3NGMtLjI1LS4yNDktLjM4My0uNTY5LS40LS45NlYxMi40NGMuMDE3LS4zOTEuMTUtLjcxMS40LS45Ni4yNDktLjI0OS41Ni0uMzczLjkzMy0uMzczeiIvPjwvc3ZnPg==" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMGE5ZmYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE3LjgxMyA0LjY1M2guODU0YzEuNTEuMDU0IDIuNzY5LjU3OCAzLjc3MyAxLjU3NCAxLjAwNC45OTUgMS41MjQgMi4yNDkgMS41NiAzLjc2djcuMzZjLS4wMzYgMS41MS0uNTU2IDIuNzY5LTEuNTYgMy43NzNzLTIuMjYyIDEuNTI0LTMuNzczIDEuNTZINS4zMzNjLTEuNTEtLjAzNi0yLjc2OS0uNTU2LTMuNzczLTEuNTZTLjAzNiAxOC44NTggMCAxNy4zNDd2LTcuMzZjLjAzNi0xLjUxMS41NTYtMi43NjUgMS41Ni0zLjc2IDEuMDA0LS45OTYgMi4yNjItMS41MiAzLjc3My0xLjU3NGguNzc0bC0xLjE3NC0xLjEyYTEuMjM0IDEuMjM0IDAgMCAxLS4zNzMtLjkwNmMwLS4zNTYuMTI0LS42NTguMzczLS45MDdsLjAyNy0uMDI3Yy4yNjctLjI0OS41NzMtLjM3My45Mi0uMzczLjM0NyAwIC42NTMuMTI0LjkyLjM3M0w5LjY1MyA0LjQ0Yy4wNzEuMDcxLjEzNC4xNDIuMTg3LjIxM2g0LjI2N2EuODM2LjgzNiAwIDAgMSAuMTYtLjIxM2wyLjg1My0yLjc0N2MuMjY3LS4yNDkuNTczLS4zNzMuOTItLjM3My4zNDcgMCAuNjYyLjE1MS45MjkuNC4yNjcuMjQ5LjM5MS41NTEuMzkxLjkwNyAwIC4zNTYtLjEyNC42NTctLjM3My45MDZ6TTUuMzMzIDcuMjRjLS43NDYuMDE4LTEuMzczLjI3Ni0xLjg4Ljc3My0uNTA2LjQ5OC0uNzY5IDEuMTMtLjc4OSAxLjg5NHY3LjUyYy4wMi43NjUuMjgzIDEuMzk1Ljc4OSAxLjg5My41MDcuNDk4IDEuMTM0Ljc1NiAxLjg4Ljc3M2gxMy4zMzRjLjc0Ni0uMDE3IDEuMzczLS4yNzUgMS44OC0uNzczLjUwNi0uNDk4Ljc2OS0xLjEyOC43ODktMS44OTN2LTcuNTJjLS4wMi0uNzY1LS4yODMtMS4zOTYtLjc4OS0xLjg5NC0uNTA3LS40OTctMS4xMzQtLjc1NS0xLjg4LS43NzN6TTggMTEuMTA3Yy4zNzMgMCAuNjg0LjEyNC45MzMuMzczLjI1LjI0OS4zODMuNTY5LjQuOTZ2MS4xNzNjLS4wMTcuMzkxLS4xNS43MTEtLjQuOTYtLjI0OS4yNS0uNTYuMzc0LS45MzMuMzc0cy0uNjg0LS4xMjUtLjkzMy0uMzc0Yy0uMjUtLjI0OS0uMzgzLS41NjktLjQtLjk2VjEyLjQ0Yy4wMTctLjM5MS4xNS0uNzExLjQtLjk2LjI0OS0uMjQ5LjU2LS4zNzMuOTMzLS4zNzN6bTggMGMuMzczIDAgLjY4NC4xMjQuOTMzLjM3My4yNS4yNDkuMzgzLjU2OS40Ljk2djEuMTczYy0uMDE3LjM5MS0uMTUuNzExLS40Ljk2LS4yNDkuMjUtLjU2LjM3NC0uOTMzLjM3NHMtLjY4NC0uMTI1LS45MzMtLjM3NGMtLjI1LS4yNDktLjM4My0uNTY5LS40LS45NlYxMi40NGMuMDE3LS4zOTEuMTUtLjcxMS40LS45Ni4yNDktLjI0OS41Ni0uMzczLjkzMy0uMzczeiIvPjwvc3ZnPg==">
-  <meta name="next-size-adjust">
-  <script src="_next/static/chunks/polyfills-42372ed130431b0a.js" nomodule=""></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#d4a574">
+    <!-- Preload avatar and background for faster loading -->
+    <link rel="preload" href="https://q.qlogo.cn/headimg_dl?dst_uin=1145145797&spec=640&img_type=jpg" as="image" crossorigin>
+    <link rel="preload" href="https://www.helloimg.com/i/2025/12/07/693546c9420a1.jpg" as="image">
+    <title>Vegcat.icu - 个人主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+            /* Fallback background color in case images fail */
+            background: linear-gradient(135deg, #d4a574, #8b6914);
+        }
+
+        /* New unified background using CSS with multiple fallbacks for old browsers */
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            /* Updated background URL */
+            background-image: url('https://www.helloimg.com/i/2025/12/07/693546c9420a1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Mobile background override */
+        @media (max-width: 768px) {
+            .bg-layer {
+                background-image: url('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAECk5Zo04QTZ9hPOe6O_PPEB_D2b1CmwwACfhsAAtta8VaYJRAVNMOv-jYE.jpg');
+                background-attachment: scroll; /* Better mobile performance */
+            }
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15) 0%, rgba(0, 0, 0, 0.35) 100%);
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        #trail-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem 1rem 7rem;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .avatar-container {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        @media (min-width: 768px) {
+            .avatar-container {
+                width: 260px;
+                height: 260px;
+            }
+        }
+
+        .avatar-container:active {
+            transform: scale(0.95);
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 40px rgba(212, 165, 116, 0.4), 0 0 80px rgba(212, 165, 116, 0.2);
+            overflow: hidden;
+            transition: transform 2s ease-in-out;
+            /* Ensure avatar always has background while loading */
+            background: linear-gradient(135deg, #d4a574, #e8c5a0);
+        }
+
+        .avatar.rotating {
+            transform: rotate(360deg);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+
+        .description {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            background: linear-gradient(45deg, #d4a574, #e8c5a0);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            min-width: 160px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #e8c5a0, #f4d4a7);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+        }
+
+        .btn svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .btn .arrow {
+            opacity: 0.7;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 15; /* Lower z-index than buttons */
+            pointer-events: none;
+        }
+
+        .footer-content {
+            pointer-events: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.6s;
+            transition: all 0.3s ease;
+        }
+
+        .footer-content:hover {
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-link {
+            color: #e8c5a0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .footer-link:hover {
+            background: #e8c5a0;
+            color: #333;
+            transform: translateY(-1px);
+        }
+
+        .footer-link::before {
+            content: '↺';
+            font-size: 1.1em;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 1rem;
+            background: linear-gradient(to right, #d4a574, #e8c5a0);
+        }
+
+        .modal-body {
+            background: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .modal-body h3 {
+            color: #333;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .modal-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: #f3f4f6;
+            margin-bottom: 1rem;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.primary {
+            background: #d4a574;
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            background: #c59663;
+        }
+
+        .modal-btn.secondary {
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+
+        .modal-btn.secondary:hover {
+            background: #f9fafb;
+        }
+
+        .loading {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #d4a574, #e8c5a0);
+            animation: fadeOut 0.5s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; pointer-events: none; }
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
+<body>
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
 
-<body class="__className_f367f3">
-  <div class="jsx-feded1e949e896e7 min-h-screen text-white relative overflow-hidden flex flex-col">
-    <div class="fixed inset-0 z-50 flex items-center justify-center" style="background:linear-gradient(135deg, #b8956a 0%, #d4a574 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8956a', endColorstr='#d4a574', GradientType=1);opacity:1">
-      <div class="text-center space-y-6">
-        <div class="w-8 h-8 border-2 border-white/30 border-t-white rounded-full mx-auto"></div>
-        <div class="text-white text-lg font-medium" style="opacity:0;transform:translateY(10px)">Loading...</div>
-      </div>
-    </div>
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-      <div class="absolute inset-0" style="background-image:url('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAECvfFo1T7nkSNHFW3k3piiOQel15EpPAACQC8AAttgqVZ4h-_ykpBOHjYE.jpg');background-size:cover;background-position:center;background-repeat:no-repeat"></div>
-      <div class="absolute inset-0" style="background:linear-gradient(135deg, rgba(184, 149, 106, 0.25) 0%, rgba(212, 165, 116, 0.15) 50%, rgba(232, 197, 160, 0.25) 100%)"></div>
-      <div class="absolute inset-0" style="background-color:rgba(0, 0, 0, 0.45);filter:none"></div>
-      <div class="absolute w-96 h-96 rounded-full" style="left:-200px;top:-200px;background:radial-gradient(circle, rgba(184, 149, 106, 0.08) 0%, transparent 70%);filter:blur(40px);-webkit-filter:blur(40px);opacity:0.6"></div>
-      <div class="absolute w-80 h-80 rounded-full" style="left:-160px;top:-160px;background:radial-gradient(circle, rgba(212, 165, 116, 0.06) 0%, transparent 70%);filter:blur(35px);-webkit-filter:blur(35px);opacity:0.5"></div>
-    </div>
-    <div class="relative z-10 flex-1 flex items-center justify-center px-4 sm:px-8 py-4 sm:py-8" style="opacity:0;transform:translateY(30px)">
-      <div class="jsx-feded1e949e896e7 max-w-4xl w-full">
-        <div class="jsx-feded1e949e896e7 text-center space-y-4 sm:space-y-6">
-          <div class="jsx-feded1e949e896e7 flex justify-center">
-            <div class="relative cursor-pointer select-none" tabindex="0">
-              <div class="relative">
-                <div class="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 xl:w-80 xl:h-80 rounded-full overflow-hidden relative">
-                  <div class="absolute inset-0 rounded-full p-1" style="background:linear-gradient(45deg, #b8956a, #d4a574, #e8c5a0, #b8956a);background-size:300% 300%;animation:gradientShift 4s ease infinite">
-                    <div class="w-full h-full rounded-full overflow-hidden bg-black"><img alt="Avatar" fetchpriority="high" loading="eager" width="640" height="640" decoding="async" data-nimg="1" class="w-full h-full object-cover" style="color:transparent" src="headimg_dl/index.html"></div>
-                  </div>
-                </div>
-              </div>
+    <!-- Simplified background using CSS only, removed img tags for better compatibility -->
+    <div class="bg-layer"></div>
+    <div class="bg-overlay"></div>
+    
+    <canvas id="trail-canvas"></canvas>
+
+    <main class="container">
+        <div class="avatar-container" onclick="rotateAvatar()">
+            <div class="avatar" id="avatar">
+                <!-- Added loading="eager" and fetchpriority="high" to force load avatar -->
+                <img src="https://q.qlogo.cn/headimg_dl?dst_uin=1145145797&spec=640&img_type=jpg" alt="Avatar" loading="eager" fetchpriority="high" crossorigin="anonymous">
             </div>
-          </div>
-          <div class="jsx-feded1e949e896e7 warm-text font-medium text-xl sm:text-2xl lg:text-3xl"><span class=""></span></div>
-          <div class="text-lg sm:text-xl lg:text-2xl max-w-lg leading-relaxed mx-auto warm-text">
-            <div style="opacity:0;transform:scale(0.95)"><span class=""></span></div>
-          </div>
-          <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 pt-6">
-            <div class="desktop-button" tabindex="0" style="opacity:0;transform:translateY(20px) scale(0.9)"><a href="https://m.bilibili.com/space/497350955" target="_blank" rel="noopener noreferrer" class="jsx-feded1e949e896e7 warm-button block text-center no-underline text-white font-medium px-6 py-3"><span class="jsx-feded1e949e896e7 flex items-center justify-center"><svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .356-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.789 1.894v7.52c.02.765.283 1.395.789 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498 1.134-.755 1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"></path>
-                  </svg>Bilibili<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 ml-2">
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg></span></a></div>
-            <div class="desktop-button" tabindex="0" style="opacity:0;transform:translateY(20px) scale(0.9)"><a href="https://steamcommunity.com/id/TwoOctober" target="_blank" rel="noopener noreferrer" class="jsx-feded1e949e896e7 warm-button block text-center no-underline text-white font-medium px-6 py-3"><span class="jsx-feded1e949e896e7 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gamepad2 w-5 h-5 mr-2">
-                    <line x1="6" x2="10" y1="11" y2="11"></line>
-                    <line x1="8" x2="8" y1="9" y2="13"></line>
-                    <line x1="15" x2="15.01" y1="12" y2="12"></line>
-                    <line x1="18" x2="18.01" y1="10" y2="10"></line>
-                    <path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"></path>
-                  </svg>Steam<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 ml-2">
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg></span></a></div>
-            <div class="desktop-button" tabindex="0" style="opacity:0;transform:translateY(20px) scale(0.9)"><a href="#" target="_self" rel="" class="jsx-feded1e949e896e7 warm-button block text-center no-underline text-white font-medium px-6 py-3"><span class="jsx-feded1e949e896e7 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe w-5 h-5 mr-2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-                    <path d="M2 12h20"></path>
-                  </svg>联系我<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 ml-2">
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg></span></a></div>
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="relative z-10 pb-4" style="opacity:0;transform:translateY(10px)">
-      <div class="jsx-feded1e949e896e7 flex justify-between items-center px-4 sm:px-8">
-        <div class="jsx-feded1e949e896e7 flex-shrink-0"><a href="https://cat.vegcat.icu" target="_blank" rel="noopener noreferrer" class="jsx-feded1e949e896e7 text-amber-200 hover:text-amber-100 transition-colors duration-300 text-sm warm-text no-underline">旧版网页</a></div>
-        <div class="jsx-feded1e949e896e7 text-amber-200 text-sm warm-text text-right"><span class=""></span></div>
-      </div>
-    </div>
-  </div>
-  <script src="_next/static/chunks/webpack-d91a3252d28944ec.js" async=""></script>
-  <script>
-    (self.__next_f = self.__next_f || []).push([0]);
-    self.__next_f.push([2, null])
-  </script>
-  <script>
-    self.__next_f.push([1, "1:HL[\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n2:HL[\"/_next/static/css/d3fd5e4f13183595.css\",\"style\"]\n"])
-  </script>
-  <script>
-    self.__next_f.push([1, "3:I[7180,[],\"\"]\n5:I[447,[],\"ClientPageRoot\"]\n6:I[473,[\"852\",\"static/chunks/852-ed920c6f2983a994.js\",\"931\",\"static/chunks/app/page-22894ddea8c81f78.js\"],\"default\",1]\n7:I[4487,[],\"\"]\n8:I[4492,[],\"\"]\na:I[5724,[],\"\"]\nb:[]\n0:[\"$\",\"$L3\",null,{\"buildId\":\"a0eX_RaBRSa_XXgeXZZY7\",\"assetPrefix\":\"\",\"urlParts\":[\"\",\"\"],\"initialTree\":[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],\"initialSeedData\":[\"\",{\"children\":[\"__PAGE__\",{},[[\"$L4\",[\"$\",\"$L5\",null,{\"props\":{\"params\":{},\"searchParams\":{}},\"Component\":\"$6\"}],null],null],null]},[[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/d3fd5e4f13183595.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"zh-CN\",\"children\":[\"$\",\"body\",null,{\"className\":\"__className_f367f3\",\"children\":[\"$\",\"$L7\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L8\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px"])
-  </script>
-  <script>
-    self.__next_f.push([1, "\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[]}]}]}]],null],null],\"couldBeIntercepted\":false,\"initialHead\":[null,\"$L9\"],\"globalErrorComponent\":\"$a\",\"missingSlots\":\"$Wb\"}]\n"])
-  </script>
-  <script>
-    self.__next_f.push([1, "c:T731,data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMGE5ZmYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE3LjgxMyA0LjY1M2guODU0YzEuNTEuMDU0IDIuNzY5LjU3OCAzLjc3MyAxLjU3NCAxLjAwNC45OTUgMS41MjQgMi4yNDkgMS41NiAzLjc2djcuMzZjLS4wMzYgMS41MS0uNTU2IDIuNzY5LTEuNTYgMy43NzNzLTIuMjYyIDEuNTI0LTMuNzczIDEuNTZINS4zMzNjLTEuNTEtLjAzNi0yLjc2OS0uNTU2LTMuNzczLTEuNTZTLjAzNiAxOC44NTggMCAxNy4zNDd2LTcuMzZjLjAzNi0xLjUxMS41NTYtMi43NjUgMS41Ni0zLjc2IDEuMDA0LS45OTYgMi4yNjItMS41MiAzLjc3My0xLjU3NGguNzc0bC0xLjE3NC0xLjEyYTEuMjM0IDEuMjM0IDAgMCAxLS4zNzMtLjkwNmMwLS4zNTYuMTI0LS42NTguMzczLS45MDdsLjAyNy0uMDI3Yy4yNjctLjI0OS41NzMtLjM3My45Mi0uMzczLjM0NyAwIC42NTMuMTI0LjkyLjM3M0w5LjY1MyA0LjQ0Yy4wNzEuMDcxLjEzNC4xNDIuMTg3LjIxM2g0LjI2N2EuODM2LjgzNiAwIDAgMSAuMTYtLjIxM2wyLjg1My0yLjc0N2MuMjY3LS4yNDkuNTczLS4zNzMuOTItLjM3My4zNDcgMCAuNjYyLjE1MS45MjkuNC4yNjcuMjQ5LjM5MS41NTEuMzkxLjkwNyAwIC4zNTYtLjEyNC42NTctLjM3My45MDZ6TTUuMzMzIDcuMjRjLS43NDYuMDE4LTEuMzczLjI3Ni0xLjg4Ljc3My0uNTA2LjQ5OC0uNzY5IDEuMTMtLjc4OSAxLjg5NHY3LjUyYy4wMi43NjUuMjgzIDEuMzk1Ljc4OSAxLjg5My41MDcuNDk4IDEuMTM0Ljc1NiAxLjg4Ljc3M2gxMy4zMzRjLjc0Ni0uMDE3IDEuMzczLS4yNzUgMS44OC0uNzczLjUwNi0uNDk4Ljc2OS0xLjEyOC43ODktMS44OTN2LTcuNTJjLS4wMi0uNzY1LS4yODMtMS4zOTYtLjc4OS0xLjg5NC0uNTA3LS40OTctMS4xMzQtLjc1NS0xLjg4LS43NzN6TTggMTEuMTA3Yy4zNzMgMCAuNjg0LjEyNC45MzMuMzczLjI1LjI0OS4zODMuNTY5LjQuOTZ2MS4xNzNjLS4wMTcuMzkxLS4xNS43MTEtLjQuOTYtLjI0OS4yNS0uNTYuMzc0LS45MzMuMzc0cy0uNjg0LS4xMjUtLjkzMy0uMzc0Yy0uMjUtLjI0OS0uMzgzLS41NjktLjQtLjk2VjEyLjQ0Yy4wMTctLjM5MS4xNS0uNzExLjQtLjk2LjI0OS0uMjQ5LjU2LS4zNzMuOTMzLS4zNzN6bTggMGMuMzczIDAgLjY4NC4xMjQuOTMzLjM3My4yNS4yNDkuMzgzLjU2OS40Ljk2djEuMTczYy0uMDE3LjM5MS0uMTUuNzExLS40Ljk2LS4yNDkuMjUtLjU2LjM3NC0uOTzMy4zNzRzLS42ODQtLjEyNS0uOTMzLS4zNzRjLS4yNS0uMjQ5LS4zODMtLjU2OS0uNC0uOTZWMTIuNDRjLjAxNy0uMzkxLjE1LS43MTEuNC0uOTYuMjQ5LS4yNDkuNTYtLjM3My45MzMtLjM3M3oiLz48L3N2Zz4=d:T732,data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMGE5ZmYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE3LjgxMyA0LjY1M2guODU0YzEuNTEuMDU0IDIuNzY5LjU3OCAzLjc"])
-  </script>
-  <script>
-    self.__next_f.push([1, "3MyAxLjU3NCAxLjAwNC45OTUgMS41MjQgMi4yNDkgMS41NiAzLjc2djcuMzZjLS4wMzYgMS41MS0uNTU2IDIuNzY5LTEuNTYgMy43NzNzLTIuMjYyIDEuNTI0LTMuNzczIDEuNTZINS4zMzNjLTEuNTEtLjAzNi0yLjc2OS0uNTU2LTMuNzczLTEuNTZTLjAzNiAxOC44NTggMCAxNy4zNDd2LTcuMzZjLjAzNi0xLjUxMS41NTYtMi43NjUgMS41Ni0zLjc2IDEuMDA0LS45OTYgMi4yNjItMS41MiAzLjc3My0xLjU3NGguNzc0bC0xLjE3NC0xLjEyYTEuMjM0IDEuMjM0IDAgMCAxLS4zNzMtLjkwNmMwLS4zNTYuMTI0LS42NTguMzczLS45MDdsLjAyNy0uMDI3Yy4yNjctLjI0OS41NzMtLjM3My45Mi0uMzczLjM0NyAwIC42NTMuMTI0LjkyLjM3M0w5LjY1MyA0LjQ0Yy4wNzEuMDcxLjEzNC4xNDIuMTg3LjIxM2g0LjI2N2EuODM2LjgzNiAwIDAgMSAuMTYtLjIxM2wyLjg1My0yLjc0N2MuMjY3LS4yNDkuNTczLS4zNzMuOTItLjM3My4zNDcgMCAuNjYyLjE1MS45MjkuNC4yNjcuMjQ5LjM5MS41NTEuMzkxLjkwNyAwIC4zNTYtLjEyNC42NTctLjM3My45MDZ6TTUuMzMzIDcuMjRjLS43NDYuMDE4LTEuMzczLjI3Ni0xLjg4Ljc3My0uNTA2LjQ5OC0uNzY5IDEuMTMtLjc4OSAxLjg5NHY3LjUyYy4wMi43NjUuMjgzIDEuMzk1Ljc4OSAxLjg5My41MDcuNDk4IDEuMTM0Ljc1NiAxLjg4Ljc3M2gxMy4zMzRjLjc0Ni0uMDE3IDEuMzczLS4yNzUgMS44OC0uNzczLjUwNi0uNDk4Ljc2OS0xLjEyOC43ODktMS44OTN2LTcuNTJjLS4wMi0uNzY1LS4yODMtMS4zOTYtLjc4OS0xLjg5NC0uNTA3LS40OTctMS4xMzQtLjc1NS0xLjg4LS43NzN6TTggMTEuMTA3Yy4zNzMgMCAuNjg0LjEyNC45MzMuMzczLjI1LjI0OS4zODMuNTY5LjQuOTZ2MS4xNzNjLS4wMTcuMzkxLS4xNS43MTEtLjQuOTYtLjI0OS4yNS0uNTYuMzc0LS45MzMuMzc0cy0uNjg0LS4xMjUtLjkzMy0uMzc0Yy0uMjUtLjI0OS0uMzgzLS41NjktLjQtLjk2VjEyLjQ0Yy4wMTctLjM5MS4xNS0uNzExLjQtLjk2LjI0OS0uMjQ5LjU2LS4zNzMuOTMzLS4zNzN6bTggMGMuMzczIDAgLjY4NC4xMjQuOTMzLjM3My4yNS4yNDkuMzgzLjU2OS40Ljk2djEuMTczYy0uMDE3LjM5MS0uMTUuNzExLS40Ljk2LS4yNDkuMjUtLjU2LjM3NC0uOTMzLjM3NHMtLjY4NC0uMTI1LS45MzMtLjM3NGMtLjI1LS4yNDktLjM4My0uNTY5LS40LS45NlYxMi40NGMuMDE3LS4zOTEuMTUtLjcxMS40LS45Ni4yNDktLjI0OS41Ni0uMzczLjkzMy0uMzczeiIvPjwvc3ZnPg==e:T732,data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMGE5ZmYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE3LjgxMyA0LjY1M2guODU0YzEuNTEuMDU0IDIuNzY5LjU3OCAzLjc3MyAxLjU3NCAxLjAwNC45OTUgMS41MjQgMi4yNDkgMS41NiAzLjc2djcuMzZjLS4wMzYgMS41MS0uNTU2IDIuNzY5LTEuNTYgMy43NzNzLTIuMjYyIDEuNTI0LTMuNzczIDEuNTZINS4zMzNjLTEuNTEtLjAzNi0yLjc2OS0uNTU2LTMuNzczLTEuNTZTLjAzNiAxOC"])
-  </script>
-  <script>
-    self.__next_f.push([1, "44NTggMCAxNy4zNDd2LTcuMzZjLjAzNi0xLjUxMS41NTYtMi43NjUgMS41Ni0zLjc2IDEuMDA0LS45OTYgMi4yNjItMS41MiAzLjc3My0xLjU3NGguNzc0bC0xLjE3NC0xLjEyYTEuMjM0IDEuMjM0IDAgMCAxLS4zNzMtLjkwNmMwLS4zNTYuMTI0LS42NTguMzczLS45MDdsLjAyNy0uMDI3Yy4yNjctLjI0OS41NzMtLjM3My45Mi0uMzczLjM0NyAwIC42NTMuMTI0LjkyLjM3M0w5LjY1MyA0LjQ0Yy4wNzEuMDcxLjEzNC4xNDIuMTg3LjIxM2g0LjI2N2EuODM2LjgzNiAwIDAgMSAuMTYtLjIxM2wyLjg1My0yLjc0N2MuMjY3LS4yNDkuNTczLS4zNzMuOTItLjM3My4zNDcgMCAuNjYyLjE1MS45MjkuNC4yNjcuMjQ5LjM5MS41NTEuMzkxLjkwNyAwIC4zNTYtLjEyNC42NTctLjM3My45MDZ6TTUuMzMzIDcuMjRjLS43NDYuMDE4LTEuMzczLjI3Ni0xLjg4Ljc3My0uNTA2LjQ5OC0uNzY5IDEuMTMtLjc4OSAxLjg5NHY3LjUyYy4wMi43NjUuMjgzIDEuMzk1Ljc4OSAxLjg5My41MDcuNDk4IDEuMTM0Ljc1NiAxLjg4Ljc3M2gxMy4zMzRjLjc0Ni0uMDE3IDEuMzczLS4yNzUgMS44OC0uNzczLjUwNi0uNDk4Ljc2OS0xLjEyOC43ODktMS44OTN2LTcuNTJjLS4wMi0uNzY1LS4yODMtMS4zOTYtLjc4OS0xLjg5NC0uNTA3LS40OTctMS4xMzQtLjc1NS0xLjg4LS43NzN6TTggMTEuMTA3Yy4zNzMgMCAuNjg0LjEyNC45MzMuMzczLjI1LjI0OS4zODMuNTY5LjQuOTZ2MS4xNzNjLS4wMTcuMzkxLS4xNS43MTEtLjQuOTYtLjI0OS4yNS0uNTYuMzc0LS45MzMuMzc0cy0uNjg0LS4xMjUtLjkzMy0uMzc0Yy0uMjUtLjI0OS0uMzgzLS41NjktLjQtLjk2VjEyLjQ0Yy4wMTctLjM5MS4xNS0uNzExLjQtLjk2LjI0OS0uMjQ5LjU2LS4zNzMuOTMzLS4zNzN6bTggMGMuMzczIDAgLjY4NC4xMjQuOTMzLjM3My4yNS4yNDkuMzgzLjU2OS40Ljk2djEuMTczYy0uMDE3LjM5MS0uMTUuNzExLS40Ljk2LS4yNDkuMjUtLjU2LjM3NC0uOTMzLjM3NHMtLjY4NC0uMTI1LS45MzMtLjM3NGMtLjI1LS4yNDktLjM4My0uNTY5LS40LS45NlYxMi40NGMuMDE3LS4zOTEuMTUtLjcxMS40LS45Ni4yNDktLjI0OS41Ni0uMzczLjkzMy0uMzczeiIvPjwvc3ZnPg==9:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"Necoarc.cn\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"Necoarc.cn\"}],[\"$\",\"meta\",\"4\",{\"name\":\"generator\",\"content\":\"v0.app\"}],[\"$\",\"link\",\"5\",{\"rel\":\"shortcut icon\",\"href\":\"$c\"}],[\"$\",\"link\",\"6\",{\"rel\":\"icon\",\"href\":\"$d\",\"type\":\"image/svg+xml\"}],[\"$\",\"link\",\"7\",{\"rel\":\"apple-touch-icon\",\"href\":\"$e\"}],[\"$\",\"meta\",\"8\",{\"name\":\"next-size-adjust\"}]]\n4:null\n"])
-  </script>
-</body>
 
+        <h1>Vegcat.icu</h1>
+
+        <p class="description">那一天的忧郁 忧郁起来</p>
+
+        <div class="buttons">
+            <a href="https://m.bilibili.com/space/497350955" target="_blank" class="btn">
+                <!-- Bilibili icon -->
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.249-1.56-3.76v-7.36c.036-1.51.556-2.769 1.56-3.773s2.262-1.524 3.773-1.56h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .356-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.789 1.894v7.52c.02.765.283 1.395.789 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.128.789-1.893v-7.52c-.02-.765-.283-1.396-.789-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
+                </svg>
+                <span>Bilibili</span>
+                <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </a>
+            
+            <a href="https://steamcommunity.com/id/TwoOctober" target="_blank" class="btn">
+                <!-- Updated Steam icon to official Steam logo -->
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658a3.387 3.387 0 0 1 1.912-.59c.064 0 .127.003.19.006l2.861-4.142V8.91a4.528 4.528 0 0 1 4.524-4.524 4.528 4.528 0 0 1 4.523 4.524 4.528 4.528 0 0 1-4.523 4.524h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 12-5.373 12-12s-5.372-12-12-12zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383a2.5 2.5 0 0 0-1.881-.039l1.522.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.451 1.021zm11.415-9.303a3.015 3.015 0 0 0-3.016-3.015 3.015 3.015 0 1 0 3.016 3.015zm-5.273-.005a2.264 2.264 0 0 1 2.262-2.263 2.264 2.264 0 1 1-2.262 2.263z"/>
+                </svg>
+                <span>Steam</span>
+                <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </a>
+            
+            <button class="btn" onclick="showModal()">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span>联系我</span>
+                <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </button>
+        </div>
+    </main>
+
+    <div class="footer">
+        <div class="footer-content">
+            <a href="https://cat.vegcat.icu" class="footer-link">旧版网页</a>
+            <div class="footer-divider"></div>
+            <p class="footer-text">© 2025 Powered by Vegcat</p>
+        </div>
+    </div>
+
+    <div class="modal" id="modal" onclick="hideModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header"></div>
+            <div class="modal-body">
+                <h3>联系方式</h3>
+                <div class="modal-image">
+                    <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAECk7do09oCTJLgnsKMQfhKnlXjNutRcAACHiAAAttgoVbC13g_hSTY1zYE.jpg" alt="Contact QR">
+                </div>
+                <div class="modal-buttons">
+                    <a href="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAECk7do09oCTJLgnsKMQfhKnlXjNutRcAACHiAAAttgoVbC13g_hSTY1zYE.jpg" download="contact.jpg" class="modal-btn primary">保存图片</a>
+                    <button class="modal-btn secondary" onclick="hideModal()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Avatar rotation
+        function rotateAvatar() {
+            const avatar = document.getElementById('avatar');
+            avatar.classList.add('rotating');
+            setTimeout(() => {
+                avatar.classList.remove('rotating');
+            }, 2000);
+        }
+
+        // Modal functions
+        function showModal() {
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function hideModal(event) {
+            if (!event || event.target.id === 'modal') {
+                document.getElementById('modal').classList.remove('active');
+            }
+        }
+
+        // Glow particle trail
+        const canvas = document.getElementById('trail-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0;
+        let mouseY = 0;
+        let isMoving = false;
+        let moveTimeout;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function handleMove(x, y) {
+            mouseX = x;
+            mouseY = y;
+            isMoving = true;
+            clearTimeout(moveTimeout);
+            moveTimeout = setTimeout(() => { isMoving = false; }, 100);
+            
+            // Create multiple glow particles for richer effect
+            if (particles.length < 80) {
+                for (let i = 0; i < 2; i++) {
+                    createGlowParticle();
+                }
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+        window.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            handleMove(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: false });
+
+        function createGlowParticle() {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 1.5 + 0.5;
+            
+            particles.push({
+                x: mouseX + (Math.random() - 0.5) * 20,
+                y: mouseY + (Math.random() - 0.5) * 20,
+                size: Math.random() * 25 + 15,
+                speedX: Math.cos(angle) * speed,
+                speedY: Math.sin(angle) * speed - 0.5, // Slight upward drift
+                hue: 35 + Math.random() * 20, // Warm golden hues
+                saturation: 80 + Math.random() * 20,
+                lightness: 60 + Math.random() * 20,
+                life: 1,
+                decay: 0.008 + Math.random() * 0.008
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Use 'lighter' blend mode for glowing effect
+            ctx.globalCompositeOperation = 'lighter';
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                
+                // Create radial gradient for glow effect
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+                const alpha = p.life * 0.6;
+                gradient.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${alpha})`);
+                gradient.addColorStop(0.4, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness - 10}%, ${alpha * 0.5})`);
+                gradient.addColorStop(1, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness - 20}%, 0)`);
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Update particle
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.speedY += 0.02; // Slight gravity
+                p.life -= p.decay;
+                p.size *= 0.995; // Shrink slowly
+
+                if (p.life <= 0 || p.size < 1) {
+                    particles.splice(i, 1);
+                }
+            }
+            
+            ctx.globalCompositeOperation = 'source-over';
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        // Force load avatar image
+        (function() {
+            const avatarImg = document.querySelector('.avatar img');
+            if (avatarImg) {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    avatarImg.src = this.src;
+                };
+                img.onerror = function() {
+                    // Retry with timestamp to bypass cache
+                    setTimeout(() => {
+                        avatarImg.src = avatarImg.src + '&t=' + Date.now();
+                    }, 1000);
+                };
+                img.src = avatarImg.src;
+            }
+        })();
+    </script>
+</body>
 </html>
