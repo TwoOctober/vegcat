@@ -2,17 +2,15 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#d4a574">
-    <!-- Preload avatar and background for faster loading -->
-    <link rel="preload" href="https://q.qlogo.cn/headimg_dl?dst_uin=1145145797&spec=640&img_type=jpg" as="image" crossorigin>
-    <link rel="preload" href="https://www.helloimg.com/i/2025/12/07/693546c9420a1.jpg" as="image">
     <title>Vegcat.icu - 个人主页</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* disable selection on all elements by default for consistency */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -29,47 +27,55 @@
             color: white;
             overflow-x: hidden;
             position: relative;
-            /* Fallback background color in case images fail */
-            background: linear-gradient(135deg, #d4a574, #8b6914);
         }
 
-        /* New unified background using CSS with multiple fallbacks for old browsers */
-        .bg-layer {
+        /* Background */
+        .bg-img {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            object-fit: cover;
             z-index: -2;
-            /* Updated background URL */
-            background-image: url('https://www.helloimg.com/i/2025/12/07/693546c9420a1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            pointer-events: none;
+            /* ensure background is visible */
+            display: block;
         }
 
-        /* Mobile background override */
-        @media (max-width: 768px) {
-            .bg-layer {
-                background-image: url('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAECk5Zo04QTZ9hPOe6O_PPEB_D2b1CmwwACfhsAAtta8VaYJRAVNMOv-jYE.jpg');
-                background-attachment: scroll; /* Better mobile performance */
-            }
+        .bg-desktop {
+            display: block;
         }
 
+        .bg-mobile {
+            display: none;
+        }
+
+        /* Overlay for background dimming */
         .bg-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15) 0%, rgba(0, 0, 0, 0.35) 100%);
-            backdrop-filter: blur(1px);
-            -webkit-backdrop-filter: blur(1px);
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
             z-index: -1;
             pointer-events: none;
         }
 
+        /* Mobile background */
+        @media (max-width: 768px) {
+            .bg-desktop {
+                display: none;
+            }
+            .bg-mobile {
+                display: block;
+            }
+        }
+
+        /* Added canvas style for mouse trail */
         #trail-canvas {
             position: fixed;
             inset: 0;
@@ -77,6 +83,7 @@
             pointer-events: none;
         }
 
+        /* Main content */
         .container {
             position: relative;
             z-index: 10;
@@ -84,7 +91,7 @@
             flex-direction: column;
             align-items: center;
             gap: 1.5rem;
-            padding: 2rem 1rem 7rem;
+            padding: 2rem 1rem 6rem; /* Add bottom padding to prevent footer overlap on mobile */
             max-width: 600px;
             width: 100%;
             text-align: center;
@@ -101,7 +108,9 @@
             }
         }
 
+        /* Avatar */
         .avatar-container {
+            /* Increased avatar size */
             width: 200px;
             height: 200px;
             cursor: pointer;
@@ -123,12 +132,10 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 40px rgba(212, 165, 116, 0.4), 0 0 80px rgba(212, 165, 116, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(212, 165, 116, 0.3);
             overflow: hidden;
             transition: transform 2s ease-in-out;
-            /* Ensure avatar always has background while loading */
-            background: linear-gradient(135deg, #d4a574, #e8c5a0);
         }
 
         .avatar.rotating {
@@ -141,11 +148,13 @@
             object-fit: cover;
         }
 
+        /* Title */
         h1 {
             font-size: 2rem;
             font-weight: bold;
             letter-spacing: 0.05em;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            /* Specifically explicitly disable selection for title */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -153,6 +162,7 @@
             cursor: default;
         }
 
+        /* Description */
         .description {
             font-size: 1.125rem;
             color: rgba(255, 255, 255, 0.9);
@@ -160,6 +170,7 @@
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
+        /* Buttons */
         .buttons {
             display: flex;
             flex-direction: column;
@@ -202,7 +213,6 @@
         .btn svg {
             width: 20px;
             height: 20px;
-            flex-shrink: 0;
         }
 
         .btn .arrow {
@@ -214,6 +224,7 @@
             transform: translateX(4px);
         }
 
+        /* Footer */
         .footer {
             position: fixed;
             bottom: 2rem;
@@ -221,8 +232,8 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            z-index: 15; /* Lower z-index than buttons */
-            pointer-events: none;
+            z-index: 20;
+            pointer-events: none; /* Allow clicks to pass through outside the content */
         }
 
         .footer-content {
@@ -288,6 +299,7 @@
             letter-spacing: 0.02em;
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -399,6 +411,7 @@
             background: #f9fafb;
         }
 
+        /* Loading */
         .loading {
             position: fixed;
             inset: 0;
@@ -408,7 +421,7 @@
             justify-content: center;
             background: linear-gradient(135deg, #d4a574, #e8c5a0);
             animation: fadeOut 0.5s ease forwards;
-            animation-delay: 0.5s;
+            animation-delay: 0.3s;
         }
 
         @keyframes fadeOut {
@@ -418,7 +431,7 @@
         .spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border: 4px solid rgba(255, 215, 0, 0.3); // Gold color
             border-top-color: white;
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -430,33 +443,39 @@
     </style>
 </head>
 <body>
+    <!-- Loading -->
     <div class="loading">
         <div class="spinner"></div>
     </div>
 
-    <!-- Simplified background using CSS only, removed img tags for better compatibility -->
-    <div class="bg-layer"></div>
+    <!-- New background implementation -->
+    <img src="https://www.helloimg.com/i/2025/12/07/693546c9420a1.jpg" class="bg-img bg-desktop" alt="">
+    <img src="https://www.helloimg.com/i/2025/12/07/693562b67b5d3.jpg" class="bg-img bg-mobile" alt="">
     <div class="bg-overlay"></div>
     
+    <!-- Added canvas for mouse trail -->
     <canvas id="trail-canvas"></canvas>
 
+    <!-- Main Content -->
     <main class="container">
+        <!-- Avatar -->
         <div class="avatar-container" onclick="rotateAvatar()">
             <div class="avatar" id="avatar">
-                <!-- Added loading="eager" and fetchpriority="high" to force load avatar -->
-                <img src="https://q.qlogo.cn/headimg_dl?dst_uin=1145145797&spec=640&img_type=jpg" alt="Avatar" loading="eager" fetchpriority="high" crossorigin="anonymous">
+                <img src="https://q.qlogo.cn/headimg_dl?dst_uin=1145145797&spec=640&img_type=jpg" alt="Avatar">
             </div>
         </div>
 
+        <!-- Title -->
         <h1>Vegcat.icu</h1>
 
+        <!-- Description -->
         <p class="description">那一天的忧郁 忧郁起来</p>
 
+        <!-- Buttons -->
         <div class="buttons">
             <a href="https://m.bilibili.com/space/497350955" target="_blank" class="btn">
-                <!-- Bilibili icon -->
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.249-1.56-3.76v-7.36c.036-1.51.556-2.769 1.56-3.773s2.262-1.524 3.773-1.56h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .356-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.789 1.894v7.52c.02.765.283 1.395.789 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.128.789-1.893v-7.52c-.02-.765-.283-1.396-.789-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
+                    <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.054-2.769-.578-3.773-1.574-1.004-.995-1.524-2.249-1.56-3.76v-7.36c.036-1.51.556-2.769 1.56-3.773s2.262-1.524 3.773-1.56h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .356-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.789 1.894v7.52c.02.765.283 1.395.789 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.128.789-1.893v-7.52c-.02-.765-.283-1.396-.789-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.56-.373-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.56-.373-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
                 </svg>
                 <span>Bilibili</span>
                 <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -465,9 +484,8 @@
             </a>
             
             <a href="https://steamcommunity.com/id/TwoOctober" target="_blank" class="btn">
-                <!-- Updated Steam icon to official Steam logo -->
                 <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658a3.387 3.387 0 0 1 1.912-.59c.064 0 .127.003.19.006l2.861-4.142V8.91a4.528 4.528 0 0 1 4.524-4.524 4.528 4.528 0 0 1 4.523 4.524 4.528 4.528 0 0 1-4.523 4.524h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 12-5.373 12-12s-5.372-12-12-12zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383a2.5 2.5 0 0 0-1.881-.039l1.522.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.451 1.021zm11.415-9.303a3.015 3.015 0 0 0-3.016-3.015 3.015 3.015 0 1 0 3.016 3.015zm-5.273-.005a2.264 2.264 0 0 1 2.262-2.263 2.264 2.264 0 1 1-2.262 2.263z"/>
+                    <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658a3.387 3.387 0 0 1 1.912-.59c.064 0 .127.003.19.006l2.861-4.142V8.91a4.528 4.528 0 0 1 4.524-4.524 4.528 4.528 0 0 1 4.523 4.524 4.528 4.528 0 0 1-4.523 4.524h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 12-5.373 12-12s-5.372-12-12-12zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383a2.5 2.5 0 0 0-1.881-.039l1.522.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.451 1.021zm11.415-9.303a3.015 3.015 0 0 0-3.016-3.015 3.015 3.015 0 1 0 3.016 3.015zm-5.273-.005a2.264 2.264 0 0 1 2.262-2.263 2.264 2.264 0 1 1-2.262 2.263z"></path>
                 </svg>
                 <span>Steam</span>
                 <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -475,18 +493,19 @@
                 </svg>
             </a>
             
-            <button class="btn" onclick="showModal()">
+            <a href="https://qm.qq.com/q/iEXZkvW1pK" target="_blank" class="btn">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
                 <span>联系我</span>
                 <svg class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                 </svg>
-            </button>
+            </a>
         </div>
     </main>
 
+    <!-- Footer -->
     <div class="footer">
         <div class="footer-content">
             <a href="https://cat.vegcat.icu" class="footer-link">旧版网页</a>
@@ -495,6 +514,7 @@
         </div>
     </div>
 
+    <!-- Modal -->
     <div class="modal" id="modal" onclick="hideModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header"></div>
@@ -532,14 +552,11 @@
             }
         }
 
-        // Glow particle trail
         const canvas = document.getElementById('trail-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         let mouseX = 0;
         let mouseY = 0;
-        let isMoving = false;
-        let moveTimeout;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -549,75 +566,57 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        function handleMove(x, y) {
-            mouseX = x;
-            mouseY = y;
-            isMoving = true;
-            clearTimeout(moveTimeout);
-            moveTimeout = setTimeout(() => { isMoving = false; }, 100);
-            
-            // Create multiple glow particles for richer effect
-            if (particles.length < 80) {
-                for (let i = 0; i < 2; i++) {
-                    createGlowParticle();
-                }
-            }
-        }
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            createParticle();
+        });
 
-        window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+        // Also track touch for mobile
         window.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            handleMove(e.touches[0].clientX, e.touches[0].clientY);
-        }, { passive: false });
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+            createParticle();
+            createParticle(); 
+        });
 
-        function createGlowParticle() {
-            const angle = Math.random() * Math.PI * 2;
-            const speed = Math.random() * 1.5 + 0.5;
+        function createParticle() {
+            if (particles.length > 100) return;
             
             particles.push({
-                x: mouseX + (Math.random() - 0.5) * 20,
-                y: mouseY + (Math.random() - 0.5) * 20,
-                size: Math.random() * 25 + 15,
-                speedX: Math.cos(angle) * speed,
-                speedY: Math.sin(angle) * speed - 0.5, // Slight upward drift
-                hue: 35 + Math.random() * 20, // Warm golden hues
-                saturation: 80 + Math.random() * 20,
-                lightness: 60 + Math.random() * 20,
-                life: 1,
-                decay: 0.008 + Math.random() * 0.008
+                x: mouseX,
+                y: mouseY,
+                size: Math.random() * 15 + 5, 
+                speedX: Math.random() * 2 - 1,
+                speedY: Math.random() * 2 - 1,
+                hue: 45 + Math.random() * 10, 
+                life: 1
             });
         }
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Use 'lighter' blend mode for glowing effect
             ctx.globalCompositeOperation = 'lighter';
 
-            for (let i = particles.length - 1; i >= 0; i--) {
+            for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
                 
-                // Create radial gradient for glow effect
                 const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
-                const alpha = p.life * 0.6;
-                gradient.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${alpha})`);
-                gradient.addColorStop(0.4, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness - 10}%, ${alpha * 0.5})`);
-                gradient.addColorStop(1, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness - 20}%, 0)`);
+                gradient.addColorStop(0, `hsla(${p.hue}, 100%, 70%, ${p.life})`);
+                gradient.addColorStop(1, `hsla(${p.hue}, 100%, 50%, 0)`);
                 
                 ctx.fillStyle = gradient;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Update particle
                 p.x += p.speedX;
                 p.y += p.speedY;
-                p.speedY += 0.02; // Slight gravity
-                p.life -= p.decay;
-                p.size *= 0.995; // Shrink slowly
+                p.life -= 0.015; 
 
-                if (p.life <= 0 || p.size < 1) {
+                if (p.life <= 0) {
                     particles.splice(i, 1);
+                    i--;
                 }
             }
             
@@ -626,25 +625,6 @@
         }
 
         animateParticles();
-
-        // Force load avatar image
-        (function() {
-            const avatarImg = document.querySelector('.avatar img');
-            if (avatarImg) {
-                const img = new Image();
-                img.crossOrigin = 'anonymous';
-                img.onload = function() {
-                    avatarImg.src = this.src;
-                };
-                img.onerror = function() {
-                    // Retry with timestamp to bypass cache
-                    setTimeout(() => {
-                        avatarImg.src = avatarImg.src + '&t=' + Date.now();
-                    }, 1000);
-                };
-                img.src = avatarImg.src;
-            }
-        })();
     </script>
 </body>
 </html>
